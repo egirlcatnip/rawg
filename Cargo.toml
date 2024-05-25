@@ -1,0 +1,15 @@
+[package]
+name = "rawg"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.12.4", features = ["json"] }
+serde = { version = "1.0.202", features = ["derive"] }
+serde_with = "3.8.1"
+serde_json = "1.0.117"
+thiserror = "1.0.61"
+serde_path_to_error = "0.1.16"
+url = "2.5.0"
