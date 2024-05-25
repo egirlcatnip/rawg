@@ -15,7 +15,7 @@ use super::tags::Tag;
 pub struct Game {
     pub id: u32,
     pub slug: String,
-    pub name: Option<String>,
+    pub name: String,
     pub name_original: Option<String>,
     pub description: Option<String>,
     pub metacritic: Option<u16>,
