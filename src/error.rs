@@ -21,6 +21,9 @@ pub enum GetError {
 
     #[error("RAWG API key is mandatory for use")]
     KeyNotProvided,
+
+    #[error("Contacting the site resulted in an error")]
+    SiteError,
 }
 
 

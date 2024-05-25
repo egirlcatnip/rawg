@@ -1,6 +1,6 @@
 use crate::auth::Auth;
 use crate::error::GetError;
-use reqwest::Url;
+use reqwest::{StatusCode, Url};
 use serde::de::DeserializeOwned;
 
 const RAWG_BASE_URI: &str = "https://api.rawg.io/api/";
@@ -22,7 +22,7 @@ impl Rawg {
         self
     }
 
-    pub async fn _url(&self, route: String) -> Result<Url, GetError> {
+    async fn url(&self, route: String) -> Result<Url, GetError> {
         let key = match &self.auth {
             Auth::Key { key } => key,
             _ => return Err(GetError::KeyNotProvided),
@@ -38,14 +38,19 @@ impl Rawg {
     pub async fn get<T>(&self, route: String) -> Result<T, GetError>
     where
         T: DeserializeOwned,
-    {
-        let url = self._url(route).await?;
+ {
+        let url = self.url(route).await?;
+        println!("{}", &url);
+
         let client = &self.client;
 
         let response = client.get(url).send().await?;
 
-        let json = response.json::<T>().await?;
-        Ok(json)
+        match response.status() {
+            StatusCode::OK => Ok(response.json().await?),
+            StatusCode::UNAUTHORIZED => Err(GetError::KeyNotProvided),
+            _ => Err(GetError::SiteError),
+        }
     }
 
     pub async fn get_with_query<T>(
@@ -56,7 +61,7 @@ impl Rawg {
     where
         T: DeserializeOwned,
     {
-        let mut url = self._url(route).await?;
+        let mut url = self.url(route).await?;
         let client = &self.client;
 
         if let Some(queries) = query {
