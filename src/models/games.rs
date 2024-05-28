@@ -19,7 +19,7 @@ pub struct Game {
     pub name_original: Option<String>,
     pub description: Option<String>,
     pub metacritic: Option<u16>,
-    pub metacritic_platforms: Vec<MetacriticPlatform>,
+    pub metacritic_platforms: Option<Vec<MetacriticPlatform>>,
     pub released: Option<String>,
     pub tba: Option<bool>,
     pub updated: Option<String>,
@@ -30,9 +30,9 @@ pub struct Game {
     pub rating_top: Option<u16>,
     pub ratings: Option<Vec<Rating>>,
     // pub reactions: Option<HashMap<String, u32>>,   /// !TODO
-    pub added: Option<i32>,
-    pub added_by_status: Option<AddedByStatus>,
-    pub playtime: Option<i32>, //IN HOURS
+    //pub added: Option<i32>,
+    // pub added_by_status: Option<AddedByStatus>,
+    //pub playtime: Option<i32>, //IN HOURS
     pub screenshots_count: Option<i32>,
     pub movies_count: Option<i32>,
     pub creators_count: Option<i32>,
@@ -45,25 +45,25 @@ pub struct Game {
     pub reddit_count: Option<i32>,
     pub twitch_count: Option<i32>,
     pub youtube_count: Option<i32>,
-    pub reviews_text_count: Option<i32>,
-    pub ratings_count: Option<i32>,
-    pub suggestions_count: Option<i32>,
-    pub alternative_names: Vec<String>,
+    //pub reviews_text_count: Option<i32>,
+    //pub ratings_count: Option<i32>,
+    //pub suggestions_count: Option<i32>,
+    pub alternative_names: Option<Vec<String>>,
     pub metacritic_url: Option<String>,
     pub parents_count: Option<i32>,
     pub additions_count: Option<i32>,
     pub game_series_count: Option<i32>,
     // pub  user_game: ???,  /// TODO!
-    pub reviews_count: Option<i32>,
+    //pub reviews_count: Option<i32>,
     pub saturated_color: Option<String>,
     pub dominant_color: Option<String>,
     pub parent_platforms: Vec<ParentPlatform>,
-    pub platforms: Vec<Platform>,
-    pub stores: Vec<Store>,
-    pub developers: Vec<Developer>,
-    pub genres: Vec<Genre>,
-    pub tags: Vec<Tag>,
-    pub publishers: Vec<Publisher>,
+    pub platforms: Option<Vec<Platform>>,
+    pub stores: Option<Vec<Store>>,
+    pub developers: Option<Vec<Developer>>,
+    pub genres: Option<Vec<Genre>>,
+    pub tags: Option<Vec<Tag>>,
+    pub publishers: Option<Vec<Publisher>>,
     pub esrb_rating: Option<EsrbRating>,
     // pub clip: ???,
     pub description_raw: Option<String>,
@@ -87,7 +87,7 @@ pub struct AddedByStatus {
 )]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Rating {
-    pub id: u32,
+    pub id: Option<u32>,
     pub title: Option<String>,
     pub count: Option<i32>,
     pub percent: Option<f32>,
@@ -98,7 +98,7 @@ pub struct Rating {
 )]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct EsrbRating {
-    pub id: u32,
+    pub id: Option<u32>,
     pub slug: Option<String>,
     pub name: Option<String>,
 }

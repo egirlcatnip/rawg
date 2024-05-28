@@ -1,6 +1,6 @@
 use crate::auth::Auth;
 use crate::error::GetError;
-use reqwest::{StatusCode, Url};
+use reqwest::{Request, StatusCode, Url};
 use serde::de::DeserializeOwned;
 
 const RAWG_BASE_URI: &str = "https://api.rawg.io/api/";
@@ -38,9 +38,8 @@ impl Rawg {
     pub async fn get<T>(&self, route: String) -> Result<T, GetError>
     where
         T: DeserializeOwned,
- {
+    {
         let url = self.url(route).await?;
-        println!("{}", &url);
 
         let client = &self.client;
 
@@ -56,7 +55,7 @@ impl Rawg {
     pub async fn get_with_query<T>(
         &self,
         route: String,
-        query: Option<Vec<(&str, &str)>>,
+        query: Option<Vec<(String, String)>>,
     ) -> Result<T, GetError>
     where
         T: DeserializeOwned,
@@ -67,7 +66,7 @@ impl Rawg {
         if let Some(queries) = query {
             // Convert &str to String
             for (key, value) in queries {
-                url.query_pairs_mut().append_pair(key, value);
+                url.query_pairs_mut().append_pair(&key, &value);
             }
         }
         let response = client.get(url).send().await?;

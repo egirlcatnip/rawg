@@ -18,7 +18,7 @@ pub struct Platforms {
 pub struct Platform {
     pub platform: PlatformDetails,
     pub released_at: Option<String>,
-    pub requirements: Requirements,
+    pub requirements: Option<Requirements>,
 }
 
 #[serde_with::apply(
@@ -26,7 +26,7 @@ pub struct Platform {
 )]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PlatformDetails {
-    pub id: u32,
+    pub id: Option<u32>,
     pub name: Option<String>,
     pub slug: Option<String>,
     pub image: Option<String>,
@@ -51,7 +51,7 @@ pub struct ParentPlatform {
 )]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PlatformShort {
-    pub id: u32,
+    pub id: Option<u32>,
     pub name: Option<String>,
     pub slug: Option<String>,
 }

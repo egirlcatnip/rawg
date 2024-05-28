@@ -25,15 +25,3 @@ pub enum GetError {
     #[error("Contacting the site resulted in an error")]
     SiteError,
 }
-
-
-/* #[derive(Error, Debug)]
-pub enum ListError {
-    #[error("No next page exists")]
-    NoNextPage,
-    #[error("No previous page exists")]
-    NoPreviousPage,
-    #[error("Page number {0} doesn't exist")]
-    NoPage(i32),
-}
- */

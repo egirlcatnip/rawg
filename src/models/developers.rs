@@ -6,7 +6,7 @@ use serde_with::serde_as;
 )]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Developer {
-    pub id: u32,
+    pub id: Option<u32>,
     pub name: Option<String>,
     pub slug: Option<String>,
     pub games_count: Option<u32>,

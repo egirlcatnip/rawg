@@ -1,4 +1,8 @@
+use std::vec;
+
 use crate::error::GetError;
+use crate::list::List;
+use crate::list::SearchHandler;
 use crate::Rawg;
 
 use crate::models::games::*;
@@ -32,5 +36,28 @@ impl<'instance> GamesHandler<'instance> {
         let id = game.id;
 
         Ok(id)
+    }
+
+    pub fn search(&self, page_size: i32) -> SearchHandler<'instance> {
+        SearchHandler {
+            instance: self.instance,
+            page_size: page_size,
+        }
+    }
+}
+
+impl<'instance> SearchHandler<'instance> {
+    pub async fn query(&self, search_term: &str) -> Result<List<Game>, GetError> {
+        let route = format!("games");
+        let page_size = self.page_size.to_string();
+
+        let query = Some(vec![
+            ("search".to_string(), search_term.to_string()),
+            ("page_size".to_string(), page_size),
+        ]);
+
+        self.instance
+            .get_with_query::<List<Game>>(route, query)
+            .await
     }
 }
